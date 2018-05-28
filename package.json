@@ -1,0 +1,51 @@
+{
+  "name": "selfkey-name-registry",
+  "version": "1.0.0",
+  "description": "Smart contract for registering names for Selfkey Identity.",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "precommit": "lint-staged",
+    "prettier": "prettier --single-quote --no-semi --write '**/*.{js,json}'",
+    "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+    "test": "truffle test",
+    "test:cov": "solidity-coverage",
+    "lint:sol": "solhint contracts/**/*.sol",
+    "lint:js": "eslint --fix test/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SelfKeyFoundation/selfkey-name-registry.git"
+  },
+  "author": "Carlos Bruguera",
+  "bugs": {
+    "url": "https://github.com/SelfKeyFoundation/selfkey-name-registry/issues"
+  },
+  "homepage": "https://github.com/SelfKeyFoundation/selfkey-name-registry#readme",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.8.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-mocha": "^5.0.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.1.0",
+    "prettier": "^1.12.1",
+    "solhint": "^1.1.10",
+    "solidity-coverage": "^0.5.0"
+  },
+  "dependencies": {
+    "bip39": "^2.5.0",
+    "ethereumjs-wallet": "^0.6.0",
+    "openzeppelin-solidity": "^1.9.0",
+    "truffle": "^4.1.8",
+    "web3": "^0.20.6",
+    "web3-provider-engine": "^8.6.1"
+  }
+}
