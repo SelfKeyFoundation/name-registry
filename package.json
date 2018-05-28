@@ -9,11 +9,15 @@
   "scripts": {
     "precommit": "lint-staged",
     "prettier": "prettier --single-quote --no-semi --write '**/*.{js,json}'",
-    "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+    "eslint-check":
+      "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "test": "truffle test",
     "test:cov": "solidity-coverage",
     "lint:sol": "solhint contracts/**/*.sol",
     "lint:js": "eslint --fix test/**/*.js"
+  },
+  "lint-staged": {
+    "**/*.{js,json}": ["prettier --singlequote --no-semi --write", "git add"]
   },
   "repository": {
     "type": "git",
@@ -23,7 +27,8 @@
   "bugs": {
     "url": "https://github.com/SelfKeyFoundation/selfkey-name-registry/issues"
   },
-  "homepage": "https://github.com/SelfKeyFoundation/selfkey-name-registry#readme",
+  "homepage":
+    "https://github.com/SelfKeyFoundation/selfkey-name-registry#readme",
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.8.0",
