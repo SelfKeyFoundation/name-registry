@@ -4,7 +4,9 @@ const timeTravel = require("./utils/timeTravel")
 
 const MockKey = artifacts.require("../test/mock/MockKey.sol")
 const NameRegistry = artifacts.require("./NameRegistry.sol")
-const StakingManager = artifacts.require("staked-access/contracts/StakingManager.sol")
+const StakingManager = artifacts.require(
+  "staked-access/contracts/StakingManager.sol"
+)
 
 contract("NameRegistry", accounts => {
   const [
@@ -39,9 +41,6 @@ contract("NameRegistry", accounts => {
     assert.equal(contractOwner2, owner)
 
     serviceID = await nameRegistry.getStakingServiceID.call()
-    //console.log("serviceID = " + serviceID)
-    //serviceID = Buffer.from(serviceID.slice(2), 'hex')
-    //console.log("serviceID = " + serviceID)
 
     // initialize senders' funds
     await token.freeMoney(sender, 4000)
@@ -54,17 +53,17 @@ contract("NameRegistry", accounts => {
     await token.approve(stakingManager.address, 1000, { from: sender3 })
   })
 
-  context('Name registration', () => {
-    it('checks whether a name has been revoked or not', async () => {
+  context("Name registration", () => {
+    it("checks whether a name has been revoked or not", async () => {
       const exists = await nameRegistry.nameExists.call("cbruguera")
       assert.isFalse(exists)
     })
 
-    it('cannot register without staking', async () => {
+    it("cannot register without staking", async () => {
       await assertThrows(nameRegistry.registerName("wont.work"))
     })
 
-    it('allows registering name after staking', async () => {
+    it("allows registering name after staking", async () => {
       const tx = await stakingManager.stake(1000, serviceID, { from: sender })
       //const stakeBalance = await stakingManager.balances.call(sender, serviceID)
       assert.notEqual(getLog(tx, "KEYStaked"), null) // generated event
@@ -74,50 +73,54 @@ contract("NameRegistry", accounts => {
       assert.isTrue(exists)
     })
 
-    it('does not allow re-registering a name', async () => {
+    it("does not allow re-registering a name", async () => {
       const tx = await stakingManager.stake(1000, serviceID, { from: sender2 })
-      await assertThrows(nameRegistry.registerName("cbruguera", { from: sender2 }))
+      await assertThrows(
+        nameRegistry.registerName("cbruguera", { from: sender2 })
+      )
     })
 
-    it('is able to resolve a registered name', async () => {
+    it("is able to resolve a registered name", async () => {
       const resolved = await nameRegistry.resolveName.call("cbruguera")
       // resolved name corresponds to original sender address
       assert.equal(resolved, sender)
     })
 
-    it('revoked name (withdrawn stake) resolves to 0x0 address', async () => {
+    it("revoked name (withdrawn stake) resolves to 0x0 address", async () => {
       // sender withdraws stake
       await stakingManager.withdraw(1000, serviceID, { from: sender })
       const resolved = await nameRegistry.resolveName.call("cbruguera")
       assert.equal(resolved, 0)
     })
 
-    it('another address can take the name after revoked', async () => {
+    it("another address can take the name after revoked", async () => {
       await nameRegistry.registerName("cbruguera", { from: sender2 })
       const resolved = await nameRegistry.resolveName.call("cbruguera")
       assert.equal(resolved, sender2)
     })
 
-    it('it allows setting a custom stake minimum', async () => {
-      let minimum =  await stakingManager.stakeMinimum.call(serviceID)
+    it("it allows setting a custom stake minimum", async () => {
+      let minimum = await stakingManager.stakeMinimum.call(serviceID)
       assert.equal(minimum, 0)
       await nameRegistry.setMinimumStake(500)
       minimum = await stakingManager.stakeMinimum.call(serviceID)
       assert.equal(minimum, 500)
     })
 
-    it('it does not allow registering if stake is under minimum', async () => {
-      await assertThrows(stakingManager.stake(400, serviceID, { from: sender3 }))
+    it("it does not allow registering if stake is under minimum", async () => {
+      await assertThrows(
+        stakingManager.stake(400, serviceID, { from: sender3 })
+      )
       //await assertThrows(nameRegistry.registerName("borrrlll", { from: sender3 }))
     })
 
-    it('it allows setting a custom stake period', async () => {
+    it("it allows setting a custom stake period", async () => {
       const days = 30
-      let period =  await stakingManager.stakePeriods.call(serviceID)
+      let period = await stakingManager.stakePeriods.call(serviceID)
       assert.equal(period, 0)
       await nameRegistry.setStakePeriod(days)
       period = await stakingManager.stakePeriods.call(serviceID)
-      assert.equal(Number(period), days*86400)
+      assert.equal(Number(period), days * 86400)
     })
   })
 })
