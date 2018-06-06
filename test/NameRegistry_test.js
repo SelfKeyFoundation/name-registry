@@ -1,11 +1,10 @@
 const assertThrows = require("./utils/assertThrows")
 const { getLog } = require("./utils/txHelpers")
-const timeTravel = require("./utils/timeTravel")
 
 const MockKey = artifacts.require("../test/mock/MockKey.sol")
 const NameRegistry = artifacts.require("./NameRegistry.sol")
 const StakingManager = artifacts.require(
-  "staked-access/contracts/StakingManager.sol"
+  "selfkey-staking/contracts/StakingManager.sol"
 )
 
 contract("NameRegistry", accounts => {
