@@ -17,10 +17,9 @@ const assertThrows = async promise => {
     const outOfGas = error.message.search(OUT_OF_GAS) >= 0
     const revert = error.message.search(REVERT) >= 0
     assert.isTrue(
-      // no-undef
       invalidOpcode || outOfGas || revert,
       `Expected throw, but got '${error}'`
-    )
+    ) // no-undef
   }
 }
 
