@@ -1,7 +1,7 @@
 pragma solidity ^0.4.23;
 
 import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
-import 'staked-access/contracts/StakingManager.sol';
+import 'selfkey-staking/contracts/StakingManager.sol';
 
 
 contract NameRegistry is Ownable {
