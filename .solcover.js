@@ -1,3 +1,3 @@
 module.exports = {
-  copyPackages: ["openzeppelin-solidity", "staked-access"]
+  copyPackages: ["openzeppelin-solidity", "selfkey-staking"]
 }
