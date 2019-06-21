@@ -50,7 +50,7 @@
     "ethereumjs-wallet": "^0.6.0",
     "openzeppelin-solidity": "^1.9.0",
     "selfkey-staking": "^1.0.0",
-    "truffle": "^4.1.11",
+    "truffle": "^5.0.24",
     "web3": "^0.20.6",
     "web3-provider-engine": "^8.6.1"
   }
